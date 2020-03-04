@@ -1,0 +1,84 @@
+﻿@model IEnumerable<NBD_ClientManagementGood.Models.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-dark">Client list</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table table-hover table-bordered bg-colour2">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FormalName)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.eMail)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormalName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>*@
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.eMail)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.State)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ClientID" class="btn btn-primary">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.ClientID" class="btn btn-primary">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
