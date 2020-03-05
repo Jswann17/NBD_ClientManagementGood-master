@@ -78,64 +78,6 @@
     <None Remove="NewFile.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Models\DesignBudgets\Create.cshtml" />
-    <None Include="Models\DesignBudgets\Delete.cshtml" />
-    <None Include="Models\DesignBudgets\Details.cshtml" />
-    <None Include="Models\DesignBudgets\Edit.cshtml" />
-    <None Include="Models\DesignBudgets\Index.cshtml" />
-    <None Include="Models\DesignDailies\Create.cshtml" />
-    <None Include="Models\DesignDailies\Delete.cshtml" />
-    <None Include="Models\DesignDailies\Details.cshtml" />
-    <None Include="Models\DesignDailies\Edit.cshtml" />
-    <None Include="Models\DesignDailies\Index.cshtml" />
-    <None Include="Models\Items\Create.cshtml" />
-    <None Include="Models\Items\Delete.cshtml" />
-    <None Include="Models\Items\Details.cshtml" />
-    <None Include="Models\Items\Edit.cshtml" />
-    <None Include="Models\Items\Index.cshtml" />
-    <None Include="Models\LabourDepartments\Create.cshtml" />
-    <None Include="Models\LabourDepartments\Delete.cshtml" />
-    <None Include="Models\LabourDepartments\Details.cshtml" />
-    <None Include="Models\LabourDepartments\Edit.cshtml" />
-    <None Include="Models\LabourDepartments\Index.cshtml" />
-    <None Include="Models\LabourReports\Create.cshtml" />
-    <None Include="Models\LabourReports\Delete.cshtml" />
-    <None Include="Models\LabourReports\Details.cshtml" />
-    <None Include="Models\LabourReports\Edit.cshtml" />
-    <None Include="Models\LabourReports\Index.cshtml" />
-    <None Include="Models\LabourUnits\Create.cshtml" />
-    <None Include="Models\LabourUnits\Delete.cshtml" />
-    <None Include="Models\LabourUnits\Details.cshtml" />
-    <None Include="Models\LabourUnits\Edit.cshtml" />
-    <None Include="Models\LabourUnits\Index.cshtml" />
-    <None Include="Models\Materials\Create.cshtml" />
-    <None Include="Models\Materials\Delete.cshtml" />
-    <None Include="Models\Materials\Details.cshtml" />
-    <None Include="Models\Materials\Edit.cshtml" />
-    <None Include="Models\Materials\Index.cshtml" />
-    <None Include="Models\Plants\Create.cshtml" />
-    <None Include="Models\Plants\Delete.cshtml" />
-    <None Include="Models\Plants\Details.cshtml" />
-    <None Include="Models\Plants\Edit.cshtml" />
-    <None Include="Models\Plants\Index.cshtml" />
-    <None Include="Models\Potteries\Create.cshtml" />
-    <None Include="Models\Potteries\Delete.cshtml" />
-    <None Include="Models\Potteries\Details.cshtml" />
-    <None Include="Models\Potteries\Edit.cshtml" />
-    <None Include="Models\Potteries\Index.cshtml" />
-    <None Include="Models\ProductionWorkReports\Create.cshtml" />
-    <None Include="Models\ProductionWorkReports\Delete.cshtml" />
-    <None Include="Models\ProductionWorkReports\Details.cshtml" />
-    <None Include="Models\ProductionWorkReports\Edit.cshtml" />
-    <None Include="Models\ProductionWorkReports\Index.cshtml" />
-    <None Include="Models\Tools\Create.cshtml" />
-    <None Include="Models\Tools\Delete.cshtml" />
-    <None Include="Models\Tools\Details.cshtml" />
-    <None Include="Models\Tools\Edit.cshtml" />
-    <None Include="Models\Tools\Index.cshtml" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
