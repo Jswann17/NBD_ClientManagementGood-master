@@ -30,19 +30,42 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Cities" asp-action="Index">City</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Countries" asp-action="Index">Country</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Bids" asp-action="Index">Bid</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Items" asp-action="Index">Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="LabourUnits" asp-action="Index">Labour Unit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="LabourDepartments" asp-action="Index">Labour Department</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Plants" asp-action="Index">Plant</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Potteries" asp-action="Index">Pottery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Materials" asp-action="Index">Material</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Tools" asp-action="Index">Tool</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reports@*<b class="caret"></b>*@
+                            </a>
+                            <div class="dropdown-menu text-dark" aria-labelledby="navbarDropdown">
+                                <a class="nav-link" asp-area="" asp-controller="LabourReports" asp-action="Index">LabourReports</a>
+                                <a class="nav-link" asp-area="" asp-controller="DesignDailies" asp-action="Index">DesignDailies</a>
+                                <a class="nav-link" asp-area="" asp-controller="DesignBudgets" asp-action="Index">DesignBudgets</a>
+                                <a class="nav-link" asp-area="" asp-controller="ProductionWorkReports" asp-action="Index">ProductionWorkReports</a>
+                            </div>
                         </li>
                     </ul>
                 </div>

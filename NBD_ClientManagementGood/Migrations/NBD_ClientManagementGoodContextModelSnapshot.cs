@@ -28,8 +28,6 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<double>("Amount");
 
-                    b.Property<int?>("BidLBID");
-
                     b.Property<string>("BlueprintCode")
                         .IsRequired()
                         .HasMaxLength(12);
@@ -38,18 +36,12 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<DateTime>("EstStart");
 
-                    b.Property<int?>("InvBidID");
-
                     b.Property<string>("Location")
                         .IsRequired();
 
                     b.Property<int>("ProjectID");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BidLBID");
-
-                    b.HasIndex("InvBidID");
 
                     b.HasIndex("ProjectID");
 
@@ -58,15 +50,13 @@ namespace NBD_ClientManagementGood.Migrations
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.BidLB", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("BidID");
 
                     b.Property<int>("LabourUnitID");
 
-                    b.HasKey("ID");
+                    b.HasKey("BidID", "LabourUnitID");
+
+                    b.HasIndex("LabourUnitID");
 
                     b.ToTable("BidLBs");
                 });
@@ -155,36 +145,103 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("NBD_ClientManagementGood.Models.HeadStaff", b =>
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.DesignBudget", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LabourUnitID");
+                    b.Property<int>("CurrentHours");
 
-                    b.Property<string>("StaffName")
+                    b.Property<int>("EstHours");
+
+                    b.Property<int>("HoursTotal");
+
+                    b.Property<DateTime>("SubmissionDate");
+
+                    b.Property<string>("Submitter")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<long>("StaffPhone");
+                    b.HasKey("ID");
+
+                    b.ToTable("DesignBudget");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.DesignDaily", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Hours");
+
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasMaxLength(1);
+
+                    b.Property<DateTime>("SubmissionDate");
+
+                    b.Property<string>("Submitter")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Task")
+                        .IsRequired()
+                        .HasMaxLength(250);
 
                     b.HasKey("ID");
 
-                    b.HasIndex("LabourUnitID");
-
-                    b.ToTable("HeadStaff");
+                    b.ToTable("DesignDaily");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.InvBid", b =>
                 {
+                    b.Property<int>("BidID");
+
+                    b.Property<int>("ItemID");
+
+                    b.HasKey("BidID", "ItemID");
+
+                    b.HasIndex("ItemID")
+                        .IsUnique();
+
+                    b.ToTable("InvBids");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Item", b =>
+                {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<int>("DeliveryDate");
+
+                    b.Property<int>("InstallDate");
+
+                    b.Property<int>("InvBidID");
+
+                    b.Property<int>("Net");
+
+                    b.Property<int?>("ProductionWorkReportID");
+
+                    b.Property<int>("Qty")
+                        .HasMaxLength(12);
+
+                    b.Property<string>("Size")
+                        .IsRequired();
+
+                    b.Property<int>("TotalCost");
+
                     b.HasKey("ID");
 
-                    b.ToTable("InvBids");
+                    b.HasIndex("ProductionWorkReportID");
+
+                    b.ToTable("Item");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourDepartment", b =>
@@ -206,43 +263,180 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("LabourDepartments");
                 });
 
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourReport", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Cost");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<double>("Price");
+
+                    b.Property<DateTime>("SubmissionDate");
+
+                    b.Property<string>("Submitter")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("LabourReport");
+                });
+
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BidLBID");
+                    b.Property<int>("Cost");
 
-                    b.Property<int>("HeadStaffID");
-
-                    b.Property<int>("LabourDepartmentID");
-
-                    b.Property<int>("LabourUnitCost");
-
-                    b.Property<string>("LabourUnitDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int>("LabourUnitEstCost");
+                    b.Property<int>("EstCost");
 
-                    b.Property<int>("LabourUnitHours");
+                    b.Property<int>("Hours");
 
-                    b.Property<string>("LabourUnitTask")
+                    b.Property<int>("LabourDepartmentID");
+
+                    b.Property<int?>("ProductionWorkReportID");
+
+                    b.Property<string>("TaskDescription")
                         .IsRequired()
                         .HasMaxLength(1000);
 
-                    b.Property<string>("LabourUnitTaskName")
+                    b.Property<string>("TaskName")
                         .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BidLBID");
-
                     b.HasIndex("LabourDepartmentID");
 
+                    b.HasIndex("ProductionWorkReportID");
+
                     b.ToTable("LabourUnits");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Material", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("List");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("OIS");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Material");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Plant", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AvgNet");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("IS_OB");
+
+                    b.Property<DateTime>("LastOrdered");
+
+                    b.Property<int>("List");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("OIS");
+
+                    b.Property<int>("OOO");
+
+                    b.Property<int>("OO_OB");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Plant");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Pottery", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("IS_OB");
+
+                    b.Property<int>("List");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("OIS");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Pottery");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Product", b =>
+                {
+                    b.Property<int>("ItemID");
+
+                    b.Property<int>("MaterialID");
+
+                    b.Property<int>("PlantID");
+
+                    b.Property<int>("PotteryID");
+
+                    b.Property<int>("ToolID");
+
+                    b.HasKey("ItemID", "MaterialID", "PlantID", "PotteryID", "ToolID");
+
+                    b.HasIndex("MaterialID");
+
+                    b.HasIndex("PlantID");
+
+                    b.HasIndex("PotteryID");
+
+                    b.HasIndex("ToolID");
+
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Production", b =>
@@ -253,13 +447,40 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<int>("BidID");
 
-                    b.Property<string>("Name");
+                    b.Property<int>("LabourDepartmentID");
+
+                    b.Property<double>("ProBidPercent");
+
+                    b.Property<double>("ProEstHourly");
+
+                    b.Property<double>("ProEstMaterialCost");
+
+                    b.Property<double>("ProEstTotalHours");
 
                     b.HasKey("ID");
 
                     b.HasIndex("BidID");
 
+                    b.HasIndex("LabourDepartmentID");
+
                     b.ToTable("Productions");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.ProductionWorkReport", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("SubmissionDate");
+
+                    b.Property<string>("Submitter")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ProductionWorkReport");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Project", b =>
@@ -287,19 +508,43 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Tool", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Tools");
+                });
+
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Bid", b =>
                 {
-                    b.HasOne("NBD_ClientManagementGood.Models.BidLB")
-                        .WithMany("Bids")
-                        .HasForeignKey("BidLBID");
-
-                    b.HasOne("NBD_ClientManagementGood.Models.InvBid")
-                        .WithMany("Bids")
-                        .HasForeignKey("InvBidID");
-
                     b.HasOne("NBD_ClientManagementGood.Models.Project", "Project")
                         .WithMany("Bids")
                         .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.BidLB", b =>
+                {
+                    b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bids")
+                        .WithMany("BidLB")
+                        .HasForeignKey("BidID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.LabourUnit", "LabourUnits")
+                        .WithMany()
+                        .HasForeignKey("LabourUnitID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -319,31 +564,76 @@ namespace NBD_ClientManagementGood.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("NBD_ClientManagementGood.Models.HeadStaff", b =>
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.InvBid", b =>
                 {
-                    b.HasOne("NBD_ClientManagementGood.Models.LabourUnit", "LabourUnit")
-                        .WithMany("HeadStaffs")
-                        .HasForeignKey("LabourUnitID")
+                    b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bid")
+                        .WithMany("InvBid")
+                        .HasForeignKey("BidID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Item", "Item")
+                        .WithOne("InvBid")
+                        .HasForeignKey("NBD_ClientManagementGood.Models.InvBid", "ItemID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Item", b =>
+                {
+                    b.HasOne("NBD_ClientManagementGood.Models.ProductionWorkReport")
+                        .WithMany("Items")
+                        .HasForeignKey("ProductionWorkReportID");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
                 {
-                    b.HasOne("NBD_ClientManagementGood.Models.BidLB")
-                        .WithMany("LabourUnits")
-                        .HasForeignKey("BidLBID");
-
                     b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
                         .WithMany("LabourUnits")
                         .HasForeignKey("LabourDepartmentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.ProductionWorkReport")
+                        .WithMany("LabourUnits")
+                        .HasForeignKey("ProductionWorkReportID");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Product", b =>
+                {
+                    b.HasOne("NBD_ClientManagementGood.Models.Item", "Item")
+                        .WithMany("Products")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Material", "Material")
+                        .WithMany("Products")
+                        .HasForeignKey("MaterialID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Plant", "Plant")
+                        .WithMany("Products")
+                        .HasForeignKey("PlantID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Pottery", "Pottery")
+                        .WithMany("Products")
+                        .HasForeignKey("PotteryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Tool", "Tool")
+                        .WithMany("Products")
+                        .HasForeignKey("ToolID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Production", b =>
                 {
                     b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bid")
-                        .WithMany()
+                        .WithMany("Productions")
                         .HasForeignKey("BidID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
+                        .WithMany()
+                        .HasForeignKey("LabourDepartmentID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

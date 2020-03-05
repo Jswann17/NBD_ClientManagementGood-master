@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NBD_ClientManagementGood.Models.LabourDepartment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentTotalHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LabourUnitID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentTotalHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LabourUnitID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

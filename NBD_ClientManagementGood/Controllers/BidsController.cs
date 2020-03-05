@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using NBD_ClientManagementGood.Models;
 
 namespace NBD_ClientManagementGood.Controllers
 {
-    [Authorize(Roles = "Admin,Supervisor")]
     public class BidsController : Controller
     {
         private readonly NBD_ClientManagementGoodContext _context;
@@ -125,7 +123,6 @@ namespace NBD_ClientManagementGood.Controllers
         }
 
         // GET: Bids/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,7 +144,6 @@ namespace NBD_ClientManagementGood.Controllers
         // POST: Bids/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bid = await _context.Bids.FindAsync(id);

@@ -18,7 +18,7 @@ namespace NBD_ClientManagementGood.Models
 
         [Display(Name = "Project Name")]
         [Required(ErrorMessage = "You can not leave this project name field blank")]
-        [StringLength(100, ErrorMessage = "Project name cannot be longer than 100 character")]
+        [StringLength(100, ErrorMessage = "Project name cannot be longer than 100 characters")]
         public string Name { get; set; }
 
         [Display(Name = "Intial Start")]

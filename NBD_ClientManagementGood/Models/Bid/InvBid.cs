@@ -7,16 +7,13 @@ namespace NBD_ClientManagementGood.Models
 {
     public class InvBid
     {
-        public InvBid()
-        {
-            Bids = new HashSet<Bid>();
-            //Items = new HashSet<Item>();
-        }
 
-        public int ID { get; set; }
+        public int BidID { get; set; }
 
-        public virtual ICollection<Bid> Bids { get; set; }
+        public virtual Bid Bid { get; set; }
 
-        //public virtual ICollection<Item> Items { get; set; }
+        public int ItemID { get; set; }
+
+        public virtual Item Item { get; set; }
     }
 }

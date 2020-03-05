@@ -21,7 +21,7 @@ namespace NBD_ClientManagementGood.Models
         public string DepartmentDescription { get; set; }
 
         [Display(Name = "Total Hours")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.DateTime)]
         [Required(ErrorMessage = "You must enter a Time")]
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int DepartmentTotalHours { get; set; }
