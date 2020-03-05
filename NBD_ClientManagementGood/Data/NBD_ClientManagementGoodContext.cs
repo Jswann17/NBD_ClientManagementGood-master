@@ -3,15 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using NBD_ClientManagementGood.Models;
+using System.Threading;
 
 namespace NBD_ClientManagementGood.Data
 {
     public class NBD_ClientManagementGoodContext : DbContext
     {
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public string UserName
+        {
+            get; private set;
+        }
         public NBD_ClientManagementGoodContext (DbContextOptions<NBD_ClientManagementGoodContext> options)
             : base(options)
         {
+            UserName = "SeedData";
+        }
+
+        public NBD_ClientManagementGoodContext(DbContextOptions<NBD_ClientManagementGoodContext> options, IHttpContextAccessor httpContextAccessor)
+            : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            UserName = _httpContextAccessor.HttpContext?.User.Identity.Name;
+            UserName = UserName ?? "Unknown";
         }
 
         public DbSet<Country> Countries { get; set; }
@@ -67,6 +85,44 @@ namespace NBD_ClientManagementGood.Data
             modelBuilder.Entity<Client>()
                 .HasIndex(p => p.Phone)
                 .IsUnique();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnBeforeSaving();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            OnBeforeSaving();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void OnBeforeSaving()
+        {
+            var entries = ChangeTracker.Entries();
+            foreach (var entry in entries)
+            {
+                if (entry.Entity is IAuditable trackable)
+                {
+                    var now = DateTime.UtcNow;
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            trackable.UpdatedOn = now;
+                            trackable.UpdatedBy = UserName;
+                            break;
+
+                        case EntityState.Added:
+                            trackable.CreatedOn = now;
+                            trackable.CreatedBy = UserName;
+                            trackable.UpdatedOn = now;
+                            trackable.UpdatedBy = UserName;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

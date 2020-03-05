@@ -4,12 +4,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NBD_ClientManagementGood.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class NBDmigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "CMO");
+
+            migrationBuilder.CreateTable(
+                name: "BidLBs",
+                schema: "CMO",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BidID = table.Column<int>(nullable: false),
+                    LabourUnitID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BidLBs", x => x.ID);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Countries",
@@ -23,6 +38,19 @@ namespace NBD_ClientManagementGood.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.CountryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvBids",
+                schema: "CMO",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvBids", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,11 +106,19 @@ namespace NBD_ClientManagementGood.Migrations
                     LabourUnitTaskName = table.Column<string>(maxLength: 100, nullable: false),
                     LabourUnitTask = table.Column<string>(maxLength: 1000, nullable: false),
                     LabourDepartmentID = table.Column<int>(nullable: false),
-                    HeadStaffID = table.Column<int>(nullable: false)
+                    HeadStaffID = table.Column<int>(nullable: false),
+                    BidLBID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LabourUnits", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_LabourUnits_BidLBs_BidLBID",
+                        column: x => x.BidLBID,
+                        principalSchema: "CMO",
+                        principalTable: "BidLBs",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LabourUnits_LabourDepartments_LabourDepartmentID",
                         column: x => x.LabourDepartmentID,
@@ -122,25 +158,26 @@ namespace NBD_ClientManagementGood.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HeadStaffs",
+                name: "HeadStaff",
                 schema: "CMO",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StaffName = table.Column<string>(maxLength: 50, nullable: false),
                     StaffPhone = table.Column<long>(nullable: false),
                     LabourUnitID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HeadStaffs", x => x.ID);
+                    table.PrimaryKey("PK_HeadStaff", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_HeadStaffs_LabourUnits_ID",
-                        column: x => x.ID,
+                        name: "FK_HeadStaff_LabourUnits_LabourUnitID",
+                        column: x => x.LabourUnitID,
                         principalSchema: "CMO",
                         principalTable: "LabourUnits",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,11 +217,27 @@ namespace NBD_ClientManagementGood.Migrations
                     EstEnd = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<double>(nullable: false),
                     Location = table.Column<string>(nullable: false),
-                    ProjectID = table.Column<int>(nullable: false)
+                    ProjectID = table.Column<int>(nullable: false),
+                    BidLBID = table.Column<int>(nullable: true),
+                    InvBidID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bids", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Bids_BidLBs_BidLBID",
+                        column: x => x.BidLBID,
+                        principalSchema: "CMO",
+                        principalTable: "BidLBs",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Bids_InvBids_InvBidID",
+                        column: x => x.InvBidID,
+                        principalSchema: "CMO",
+                        principalTable: "InvBids",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Bids_Projects_ProjectID",
                         column: x => x.ProjectID,
@@ -215,6 +268,18 @@ namespace NBD_ClientManagementGood.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bids_BidLBID",
+                schema: "CMO",
+                table: "Bids",
+                column: "BidLBID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bids_InvBidID",
+                schema: "CMO",
+                table: "Bids",
+                column: "InvBidID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bids_ProjectID",
@@ -249,10 +314,16 @@ namespace NBD_ClientManagementGood.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HeadStaffs_StaffName",
+                name: "IX_HeadStaff_LabourUnitID",
                 schema: "CMO",
-                table: "HeadStaffs",
-                column: "StaffName");
+                table: "HeadStaff",
+                column: "LabourUnitID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabourUnits_BidLBID",
+                schema: "CMO",
+                table: "LabourUnits",
+                column: "BidLBID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LabourUnits_LabourDepartmentID",
@@ -267,14 +338,6 @@ namespace NBD_ClientManagementGood.Migrations
                 column: "BidID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Productions_Name",
-                schema: "CMO",
-                table: "Productions",
-                column: "Name",
-                unique: true,
-                filter: "[Name] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_ClientID",
                 schema: "CMO",
                 table: "Projects",
@@ -284,7 +347,7 @@ namespace NBD_ClientManagementGood.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HeadStaffs",
+                name: "HeadStaff",
                 schema: "CMO");
 
             migrationBuilder.DropTable(
@@ -301,6 +364,14 @@ namespace NBD_ClientManagementGood.Migrations
 
             migrationBuilder.DropTable(
                 name: "LabourDepartments",
+                schema: "CMO");
+
+            migrationBuilder.DropTable(
+                name: "BidLBs",
+                schema: "CMO");
+
+            migrationBuilder.DropTable(
+                name: "InvBids",
                 schema: "CMO");
 
             migrationBuilder.DropTable(

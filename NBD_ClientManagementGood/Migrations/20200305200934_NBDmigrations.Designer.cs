@@ -10,8 +10,8 @@ using NBD_ClientManagementGood.Data;
 namespace NBD_ClientManagementGood.Migrations
 {
     [DbContext(typeof(NBD_ClientManagementGoodContext))]
-    [Migration("20200304203743_NewMigration")]
-    partial class NewMigration
+    [Migration("20200305200934_NBDmigrations")]
+    partial class NBDmigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,8 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<double>("Amount");
 
+                    b.Property<int?>("BidLBID");
+
                     b.Property<string>("BlueprintCode")
                         .IsRequired()
                         .HasMaxLength(12);
@@ -38,6 +40,8 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<DateTime>("EstStart");
 
+                    b.Property<int?>("InvBidID");
+
                     b.Property<string>("Location")
                         .IsRequired();
 
@@ -45,9 +49,28 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BidLBID");
+
+                    b.HasIndex("InvBidID");
+
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Bids");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.BidLB", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BidID");
+
+                    b.Property<int>("LabourUnitID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BidLBs");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.City", b =>
@@ -136,7 +159,9 @@ namespace NBD_ClientManagementGood.Migrations
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.HeadStaff", b =>
                 {
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("LabourUnitID");
 
@@ -148,9 +173,20 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("StaffName");
+                    b.HasIndex("LabourUnitID");
 
-                    b.ToTable("HeadStaffs");
+                    b.ToTable("HeadStaff");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.InvBid", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("InvBids");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourDepartment", b =>
@@ -178,6 +214,8 @@ namespace NBD_ClientManagementGood.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BidLBID");
+
                     b.Property<int>("HeadStaffID");
 
                     b.Property<int>("LabourDepartmentID");
@@ -202,6 +240,8 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BidLBID");
+
                     b.HasIndex("LabourDepartmentID");
 
                     b.ToTable("LabourUnits");
@@ -220,10 +260,6 @@ namespace NBD_ClientManagementGood.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("BidID");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Productions");
                 });
@@ -255,6 +291,14 @@ namespace NBD_ClientManagementGood.Migrations
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Bid", b =>
                 {
+                    b.HasOne("NBD_ClientManagementGood.Models.BidLB")
+                        .WithMany("Bids")
+                        .HasForeignKey("BidLBID");
+
+                    b.HasOne("NBD_ClientManagementGood.Models.InvBid")
+                        .WithMany("Bids")
+                        .HasForeignKey("InvBidID");
+
                     b.HasOne("NBD_ClientManagementGood.Models.Project", "Project")
                         .WithMany("Bids")
                         .HasForeignKey("ProjectID")
@@ -281,12 +325,16 @@ namespace NBD_ClientManagementGood.Migrations
                 {
                     b.HasOne("NBD_ClientManagementGood.Models.LabourUnit", "LabourUnit")
                         .WithMany("HeadStaffs")
-                        .HasForeignKey("ID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("LabourUnitID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
                 {
+                    b.HasOne("NBD_ClientManagementGood.Models.BidLB")
+                        .WithMany("LabourUnits")
+                        .HasForeignKey("BidLBID");
+
                     b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
                         .WithMany("LabourUnits")
                         .HasForeignKey("LabourDepartmentID")

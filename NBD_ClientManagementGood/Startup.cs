@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using NBD_ClientManagementGood.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace NBD_ClientManagementGood
 {
@@ -76,12 +77,12 @@ namespace NBD_ClientManagementGood
                 options.SlidingExpiration = true;
             });
 
-
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<NBD_ClientManagementGoodContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("NBD_ClientManagementGoodContext")));
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

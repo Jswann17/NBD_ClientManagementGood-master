@@ -65,6 +65,10 @@
     <Compile Remove="Migrations\20200213203646_nbd.Designer.cs" />
     <Compile Remove="Migrations\20200213203758_nbd.cs" />
     <Compile Remove="Migrations\20200213203758_nbd.Designer.cs" />
+    <Compile Remove="Migrations\20200304203743_NewMigration.cs" />
+    <Compile Remove="Migrations\20200304203743_NewMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200305181156_NBDmigrations.cs" />
+    <Compile Remove="Migrations\20200305181156_NBDmigrations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,6 +79,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>

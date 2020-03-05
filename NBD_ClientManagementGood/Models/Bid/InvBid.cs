@@ -13,6 +13,8 @@ namespace NBD_ClientManagementGood.Models
             //Items = new HashSet<Item>();
         }
 
+        public int ID { get; set; }
+
         public virtual ICollection<Bid> Bids { get; set; }
 
         //public virtual ICollection<Item> Items { get; set; }

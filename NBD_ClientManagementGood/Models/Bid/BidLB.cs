@@ -13,6 +13,8 @@ namespace NBD_ClientManagementGood.Models
             LabourUnits = new HashSet<LabourUnit>();
         }
 
+        public int ID { get; set; }
+
         public int BidID { get; set; }
 
         public virtual ICollection<Bid> Bids { get; set; }
