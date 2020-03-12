@@ -71,6 +71,10 @@
     <Compile Remove="Migrations\20200305181156_NBDmigrations.Designer.cs" />
     <Compile Remove="Migrations\20200305200934_NBDmigrations.cs" />
     <Compile Remove="Migrations\20200305200934_NBDmigrations.Designer.cs" />
+    <Compile Remove="Migrations\20200305231253_NBDM.cs" />
+    <Compile Remove="Migrations\20200305231253_NBDM.Designer.cs" />
+    <Compile Remove="Migrations\20200310045952_New Migrations.cs" />
+    <Compile Remove="Migrations\20200310045952_New Migrations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

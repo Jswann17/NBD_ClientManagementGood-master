@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NBD_ClientManagementGood.Migrations
 {
-    public partial class NBDM : Migration
+    public partial class ProjectMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

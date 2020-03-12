@@ -10,8 +10,8 @@ using NBD_ClientManagementGood.Data;
 namespace NBD_ClientManagementGood.Migrations
 {
     [DbContext(typeof(NBD_ClientManagementGoodContext))]
-    [Migration("20200305231253_NBDM")]
-    partial class NBDM
+    [Migration("20200311234555_ProjectMigration")]
+    partial class ProjectMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
