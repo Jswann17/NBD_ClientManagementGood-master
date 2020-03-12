@@ -10,22 +10,22 @@ using NBD_ClientManagementGood.Models;
 
 namespace NBD_ClientManagementGood.Controllers
 {
-    public class LabourUnitsController : Controller
+    public class StaffsController : Controller
     {
         private readonly NBD_ClientManagementGoodContext _context;
 
-        public LabourUnitsController(NBD_ClientManagementGoodContext context)
+        public StaffsController(NBD_ClientManagementGoodContext context)
         {
             _context = context;
         }
 
-        // GET: LabourUnits
+        // GET: Staffs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LabourUnits.ToListAsync());
+            return View(await _context.Staffs.ToListAsync());
         }
 
-        // GET: LabourUnits/Details/5
+        // GET: Staffs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace NBD_ClientManagementGood.Controllers
                 return NotFound();
             }
 
-            var labourUnit = await _context.LabourUnits
+            var staff = await _context.Staffs
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (labourUnit == null)
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return View(labourUnit);
+            return View(staff);
         }
 
-        // GET: LabourUnits/Create
+        // GET: Staffs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: LabourUnits/Create
+        // POST: Staffs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Description,Hours,Cost,EstCost,TaskName,TaskDescription")] LabourUnit labourUnit)
+        public async Task<IActionResult> Create([Bind("ID,Name,Role,Phone")] Staff staff)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(labourUnit);
+                _context.Add(staff);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(labourUnit);
+            return View(staff);
         }
 
-        // GET: LabourUnits/Edit/5
+        // GET: Staffs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace NBD_ClientManagementGood.Controllers
                 return NotFound();
             }
 
-            var labourUnit = await _context.LabourUnits.FindAsync(id);
-            if (labourUnit == null)
+            var staff = await _context.Staffs.FindAsync(id);
+            if (staff == null)
             {
                 return NotFound();
             }
-            return View(labourUnit);
+            return View(staff);
         }
 
-        // POST: LabourUnits/Edit/5
+        // POST: Staffs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,Hours,Cost,EstCost,TaskName,TaskDescription")] LabourUnit labourUnit)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Role,Phone")] Staff staff)
         {
-            if (id != labourUnit.ID)
+            if (id != staff.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace NBD_ClientManagementGood.Controllers
             {
                 try
                 {
-                    _context.Update(labourUnit);
+                    _context.Update(staff);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LabourUnitExists(labourUnit.ID))
+                    if (!StaffExists(staff.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace NBD_ClientManagementGood.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(labourUnit);
+            return View(staff);
         }
 
-        // GET: LabourUnits/Delete/5
+        // GET: Staffs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace NBD_ClientManagementGood.Controllers
                 return NotFound();
             }
 
-            var labourUnit = await _context.LabourUnits
+            var staff = await _context.Staffs
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (labourUnit == null)
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return View(labourUnit);
+            return View(staff);
         }
 
-        // POST: LabourUnits/Delete/5
+        // POST: Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var labourUnit = await _context.LabourUnits.FindAsync(id);
-            _context.LabourUnits.Remove(labourUnit);
+            var staff = await _context.Staffs.FindAsync(id);
+            _context.Staffs.Remove(staff);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LabourUnitExists(int id)
+        private bool StaffExists(int id)
         {
-            return _context.LabourUnits.Any(e => e.ID == id);
+            return _context.Staffs.Any(e => e.ID == id);
         }
     }
 }

@@ -48,19 +48,6 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("Bids");
                 });
 
-            modelBuilder.Entity("NBD_ClientManagementGood.Models.BidLB", b =>
-                {
-                    b.Property<int>("BidID");
-
-                    b.Property<int>("LabourUnitID");
-
-                    b.HasKey("BidID", "LabourUnitID");
-
-                    b.HasIndex("LabourUnitID");
-
-                    b.ToTable("BidLBs");
-                });
-
             modelBuilder.Entity("NBD_ClientManagementGood.Models.City", b =>
                 {
                     b.Property<int>("CityID")
@@ -203,8 +190,7 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.HasKey("BidID", "ItemID");
 
-                    b.HasIndex("ItemID")
-                        .IsUnique();
+                    b.HasIndex("ItemID");
 
                     b.ToTable("InvBids");
                 });
@@ -219,13 +205,11 @@ namespace NBD_ClientManagementGood.Migrations
                         .IsRequired()
                         .HasMaxLength(256);
 
-                    b.Property<int>("DeliveryDate");
+                    b.Property<DateTime>("DeliveryDate");
 
-                    b.Property<int>("InstallDate");
+                    b.Property<DateTime>("InstallDate");
 
-                    b.Property<int>("InvBidID");
-
-                    b.Property<int>("Net");
+                    b.Property<double>("Net");
 
                     b.Property<int?>("ProductionWorkReportID");
 
@@ -233,15 +217,31 @@ namespace NBD_ClientManagementGood.Migrations
                         .HasMaxLength(12);
 
                     b.Property<string>("Size")
-                        .IsRequired();
+                        .HasMaxLength(100);
 
-                    b.Property<int>("TotalCost");
+                    b.Property<double>("TotalCost");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
                     b.HasIndex("ProductionWorkReportID");
 
                     b.ToTable("Item");
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Labour", b =>
+                {
+                    b.Property<int>("LabourUnitID");
+
+                    b.Property<int>("ProductionID");
+
+                    b.HasKey("LabourUnitID", "ProductionID");
+
+                    b.HasIndex("ProductionID");
+
+                    b.ToTable("Labours");
                 });
 
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourDepartment", b =>
@@ -254,9 +254,9 @@ namespace NBD_ClientManagementGood.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int>("DepartmentTotalHours");
-
-                    b.Property<int>("LabourUnitID");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
@@ -288,6 +288,23 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("LabourReport");
                 });
 
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourStaff", b =>
+                {
+                    b.Property<int>("LabourDeparmentID");
+
+                    b.Property<int>("StaffID");
+
+                    b.Property<int?>("LabourDepartmentID");
+
+                    b.HasKey("LabourDeparmentID", "StaffID");
+
+                    b.HasIndex("LabourDepartmentID");
+
+                    b.HasIndex("StaffID");
+
+                    b.ToTable("LabourStaffs");
+                });
+
             modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
                 {
                     b.Property<int>("ID")
@@ -304,8 +321,6 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<int>("Hours");
 
-                    b.Property<int>("LabourDepartmentID");
-
                     b.Property<int?>("ProductionWorkReportID");
 
                     b.Property<string>("TaskDescription")
@@ -317,8 +332,6 @@ namespace NBD_ClientManagementGood.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("ID");
-
-                    b.HasIndex("LabourDepartmentID");
 
                     b.HasIndex("ProductionWorkReportID");
 
@@ -466,6 +479,19 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("Productions");
                 });
 
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.ProductionItem", b =>
+                {
+                    b.Property<int>("ItemID");
+
+                    b.Property<int>("ProductionID");
+
+                    b.HasKey("ItemID", "ProductionID");
+
+                    b.HasIndex("ProductionID");
+
+                    b.ToTable("ProductionItems");
+                });
+
             modelBuilder.Entity("NBD_ClientManagementGood.Models.ProductionWorkReport", b =>
                 {
                     b.Property<int>("ID")
@@ -508,6 +534,27 @@ namespace NBD_ClientManagementGood.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Staff", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<long>("Phone");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Staffs");
+                });
+
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Tool", b =>
                 {
                     b.Property<int>("ID")
@@ -535,19 +582,6 @@ namespace NBD_ClientManagementGood.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NBD_ClientManagementGood.Models.BidLB", b =>
-                {
-                    b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bids")
-                        .WithMany("BidLB")
-                        .HasForeignKey("BidID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NBD_ClientManagementGood.Models.LabourUnit", "LabourUnits")
-                        .WithMany()
-                        .HasForeignKey("LabourUnitID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("NBD_ClientManagementGood.Models.City", b =>
                 {
                     b.HasOne("NBD_ClientManagementGood.Models.Country", "Country")
@@ -567,13 +601,13 @@ namespace NBD_ClientManagementGood.Migrations
             modelBuilder.Entity("NBD_ClientManagementGood.Models.InvBid", b =>
                 {
                     b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bid")
-                        .WithMany("InvBid")
+                        .WithMany("InvBids")
                         .HasForeignKey("BidID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NBD_ClientManagementGood.Models.Item", "Item")
-                        .WithOne("InvBid")
-                        .HasForeignKey("NBD_ClientManagementGood.Models.InvBid", "ItemID")
+                        .WithMany("InvBids")
+                        .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -584,13 +618,33 @@ namespace NBD_ClientManagementGood.Migrations
                         .HasForeignKey("ProductionWorkReportID");
                 });
 
-            modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.Labour", b =>
                 {
-                    b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
-                        .WithMany("LabourUnits")
-                        .HasForeignKey("LabourDepartmentID")
+                    b.HasOne("NBD_ClientManagementGood.Models.LabourUnit", "LabourUnit")
+                        .WithMany("Labours")
+                        .HasForeignKey("LabourUnitID")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("NBD_ClientManagementGood.Models.Production", "Production")
+                        .WithMany("Labour")
+                        .HasForeignKey("ProductionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourStaff", b =>
+                {
+                    b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
+                        .WithMany("LabourStaffs")
+                        .HasForeignKey("LabourDepartmentID");
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Staff", "Staff")
+                        .WithMany("LabourStaffs")
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.LabourUnit", b =>
+                {
                     b.HasOne("NBD_ClientManagementGood.Models.ProductionWorkReport")
                         .WithMany("LabourUnits")
                         .HasForeignKey("ProductionWorkReportID");
@@ -627,13 +681,26 @@ namespace NBD_ClientManagementGood.Migrations
             modelBuilder.Entity("NBD_ClientManagementGood.Models.Production", b =>
                 {
                     b.HasOne("NBD_ClientManagementGood.Models.Bid", "Bid")
-                        .WithMany("Productions")
+                        .WithMany()
                         .HasForeignKey("BidID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NBD_ClientManagementGood.Models.LabourDepartment", "LabourDepartment")
-                        .WithMany()
+                        .WithMany("Productions")
                         .HasForeignKey("LabourDepartmentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD_ClientManagementGood.Models.ProductionItem", b =>
+                {
+                    b.HasOne("NBD_ClientManagementGood.Models.Item", "Item")
+                        .WithMany("ProductionItems")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD_ClientManagementGood.Models.Production", "Production")
+                        .WithMany("ProductionItems")
+                        .HasForeignKey("ProductionID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -11,21 +11,21 @@ namespace NBD_ClientManagementGood.Models
         public int ID { get; set; }
 
         [Display(Name = "Current Hours")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int CurrentHours { get; set; }
 
         [Display(Name = "Estimated Hours")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int EstHours { get; set; }
 
         [Display(Name = "Total Hours")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int HoursTotal { get; set; }
 
         [Display(Name = "Submission Date")]

@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 
 namespace NBD_ClientManagementGood.Models
 {
-    public class HeadStaff
+    public class Staff
     {
-        public HeadStaff()
+        public Staff()
         {
-            LabourUnits = new HashSet<LabourUnit>();
+            LabourStaffs = new HashSet<LabourStaff>();
         }
 
         public int ID { get; set; }
 
         [Display(Name = "Staff Name")]
-        [Required(ErrorMessage = "You cannot leave the unit name blank")]
+        [Required(ErrorMessage = "You cannot leave the staff name blank")]
         [StringLength(50, ErrorMessage = "First name cannot be more than 50 characters long.")]
         public string Name { get; set; }
+
+        [Display(Name = "Role Name")]
+        [Required(ErrorMessage = "You cannot leave the staff role blank")]
+        [StringLength(50, ErrorMessage = "First name cannot be more than 50 characters long.")]
+        public string Role { get; set; }
 
         [Display(Name = "Phone")]
         [Required(ErrorMessage = "Phone number is required.")]
@@ -27,8 +32,6 @@ namespace NBD_ClientManagementGood.Models
         [DisplayFormat(DataFormatString = "{0:(###) ###-####}", ApplyFormatInEditMode = false)]
         public Int64 Phone { get; set; }
 
-        public int LabourUnitID { get; set; }
-
-        public virtual ICollection<LabourUnit> LabourUnits { get; set; }
+        public virtual ICollection<LabourStaff> LabourStaffs { get; set; }
     }
 }

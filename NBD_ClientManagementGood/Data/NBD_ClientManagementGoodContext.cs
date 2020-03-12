@@ -19,31 +19,51 @@ namespace NBD_ClientManagementGood.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Bid> Bids { get; set; }
-        public DbSet<BidLB> BidLBs { get; set; }
+        //public DbSet<BidLB> BidLBs { get; set; }
         public DbSet<InvBid> InvBids { get; set; }
         public DbSet<Production> Productions { get; set; }
+        public DbSet<ProductionItem> ProductionItems { get; set; }
         public DbSet<LabourUnit> LabourUnits { get; set; }
+        //public DbSet<ProjectTeam> ProjectTeams { get; set; }
         public DbSet<LabourDepartment> LabourDepartments { get; set; }
-        //public DbSet<HeadStaff> HeadStaff { get; set; }
+        public DbSet<LabourStaff> LabourStaffs { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Labour> Labours { get; set; }
         public DbSet<Item> Item { get; set; }
         public DbSet<Material> Material { get; set; }
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Pottery> Pottery { get; set; }
         public DbSet<Tool> Tools { get; set; }
-
+        public DbSet<LabourReport> LabourReport { get; set; }
+        public DbSet<DesignDaily> DesignDaily { get; set; }
+        public DbSet<DesignBudget> DesignBudget { get; set; }
+        public DbSet<ProductionWorkReport> ProductionWorkReport { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("CMO");
 
-            modelBuilder.Entity<BidLB>()
-                .HasKey(b => new { b.BidID, b.LabourUnitID });
+            //modelBuilder.Entity<BidLB>()
+            //    .HasKey(b => new { b.BidID, b.LabourUnitID });
 
             modelBuilder.Entity<InvBid>()
                 .HasKey(b => new { b.BidID, b.ItemID });
 
+            //Doesn't Do anything ATM, changing intos something else later.
             modelBuilder.Entity<Product>()
                 .HasKey(b => new { b.ItemID, b.MaterialID, b.PlantID, b.PotteryID, b.ToolID });
+
+            modelBuilder.Entity<LabourStaff>()
+                .HasKey(b => new { b.LabourDeparmentID, b.StaffID });
+
+            modelBuilder.Entity<Labour>()
+                .HasKey(b => new { b.LabourUnitID, b.ProductionID });
+
+            //modelBuilder.Entity<ProjectTeam>()
+            //    .HasKey(b => new { b.LabourDepartmentID, b.ProductionID });
+
+            modelBuilder.Entity<ProductionItem>()
+                .HasKey(b => new { b.ItemID, b.ProductionID });
 
             //Prevent Cascade Delete from Country to City
             //This prevents deleting a Country with a City assigned 
@@ -89,17 +109,5 @@ namespace NBD_ClientManagementGood.Data
             //    .HasIndex(b => b.BlueprintCode)
             //    .IsUnique();
         }
-
-
-        public DbSet<NBD_ClientManagementGood.Models.LabourReport> LabourReport { get; set; }
-
-
-        public DbSet<NBD_ClientManagementGood.Models.DesignDaily> DesignDaily { get; set; }
-
-
-        public DbSet<NBD_ClientManagementGood.Models.DesignBudget> DesignBudget { get; set; }
-
-
-        public DbSet<NBD_ClientManagementGood.Models.ProductionWorkReport> ProductionWorkReport { get; set; }
     }
 }

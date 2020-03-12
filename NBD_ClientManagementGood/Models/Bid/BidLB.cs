@@ -7,12 +7,12 @@ namespace NBD_ClientManagementGood.Models
 {
     public class BidLB
     {
-        public int BidID { get; set; }
+        //public int BidID { get; set; }
 
-        public virtual Bid Bids { get; set; }
+        //public virtual Bid Bids { get; set; }
 
-        public int LabourUnitID { get; set; }
+        //public int LabourUnitID { get; set; }
 
-        public virtual LabourUnit LabourUnits { get; set; }
+        //public virtual LabourUnit LabourUnits { get; set; }
     }
 }

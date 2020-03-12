@@ -16,9 +16,9 @@ namespace NBD_ClientManagementGood.Models
         public string Stage { get; set; }
 
         [Display(Name = "Hours")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int Hours { get; set; }
 
         [Display(Name = "Task Description")]

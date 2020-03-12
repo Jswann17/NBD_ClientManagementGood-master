@@ -9,10 +9,10 @@ namespace NBD_ClientManagementGood.Models
 {
     public class Project
     {
-        //public Project()
-        //{
-        //    Bids = new HashSet<Bid>();
-        //}
+        public Project()
+        {
+            Bids = new HashSet<Bid>();
+        }
 
         public int ID { get; set; }
 
@@ -38,8 +38,6 @@ namespace NBD_ClientManagementGood.Models
         [Required(ErrorMessage = "You must enter a Completion Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
-
-        //public int BidID { get; set; }
 
         public virtual ICollection<Bid> Bids { get; set; }
 

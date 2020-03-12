@@ -71,6 +71,28 @@
     <Compile Remove="Migrations\20200305181156_NBDmigrations.Designer.cs" />
     <Compile Remove="Migrations\20200305200934_NBDmigrations.cs" />
     <Compile Remove="Migrations\20200305200934_NBDmigrations.Designer.cs" />
+    <Compile Remove="Migrations\20200305231253_NBDM.cs" />
+    <Compile Remove="Migrations\20200305231253_NBDM.Designer.cs" />
+    <Compile Remove="Migrations\20200309165544_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200309165544_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200311205122_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200311205122_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200311231311_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200311231311_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200311233218_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200311233218_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200312024610_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312024610_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200312025246_Nbd.cs" />
+    <Compile Remove="Migrations\20200312025246_Nbd.Designer.cs" />
+    <Compile Remove="Migrations\20200312025522_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312025522_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200312030434_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312030434_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200312192145_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312192145_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200312192430_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312192430_NBDMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

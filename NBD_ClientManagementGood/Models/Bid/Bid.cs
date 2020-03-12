@@ -10,7 +10,9 @@ namespace NBD_ClientManagementGood.Models
     {
         public Bid()
         {
-            Productions = new HashSet<Production>();
+            //BidLBs = new HashSet<BidLB>();
+            InvBids = new HashSet<InvBid>();
+            //LabourUnits = new HashSet<LabourUnit>();
         }
 
         public int ID { get; set; }
@@ -40,15 +42,15 @@ namespace NBD_ClientManagementGood.Models
         public double Amount { get; set; }
 
         [Display(Name = "Location")]
-        [Required(ErrorMessage = "You must enter a location")]
+        //[Required(ErrorMessage = "You must enter a location")]
         [RegularExpression("^[A-Za-z\\s\\d]+$", ErrorMessage = "Please enter valid amount.")]
         public string Location { get; set; }
 
-        public virtual ICollection<Production> Productions { get; set; }
+        public virtual ICollection<InvBid> InvBids { get; set; }
 
-        public virtual ICollection<InvBid> InvBid { get; set; }
+        //public virtual ICollection<BidLB>  BidLBs { get; set; }
 
-        public virtual ICollection<BidLB>  BidLB { get; set; }
+        //public virtual ICollection<LabourUnit> LabourUnits { get; set; }
 
         public int ProjectID { get; set; }
 
