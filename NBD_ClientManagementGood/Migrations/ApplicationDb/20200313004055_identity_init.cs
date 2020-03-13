@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace NBD_ClientManagementGood.Migrations
+namespace NBD_ClientManagementGood.Migrations.ApplicationDb
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class identity_init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
