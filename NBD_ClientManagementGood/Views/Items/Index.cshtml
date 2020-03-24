@@ -65,12 +65,6 @@
                 @Html.DisplayFor(modelItem => item.DeliveryDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InstallDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvBidID)
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-success">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-success">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-success">Delete</a>
