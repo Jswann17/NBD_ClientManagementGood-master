@@ -8,6 +8,11 @@ namespace NBD_ClientManagementGood.Models
 {
     public class LabourUnit
     {
+        public LabourUnit()
+        {
+            Labours = new HashSet<Labour>();  
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Unit Description")]
@@ -18,7 +23,7 @@ namespace NBD_ClientManagementGood.Models
         [Display(Name = "Total Hours")]
         //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public int Hours { get; set; }
 
         [Display(Name = "Total Cost")]
@@ -43,12 +48,10 @@ namespace NBD_ClientManagementGood.Models
         [StringLength(1000, ErrorMessage = "The description cannot be more than 1000 characters long.")]
         public string TaskDescription { get; set; }
 
-        public int LabourDepartmentID { get; set; }
+        public virtual ICollection<Labour> Labours { get; set; }
 
-        public LabourDepartment LabourDepartment { get; set; }
+        //public int BidID { get; set; }
 
-        //public int HeadStaffID { get; set; }
-
-        //public HeadStaff headStaff { get; set; }
+        //public virtual Bid Bid { get; set; }
     }
 }

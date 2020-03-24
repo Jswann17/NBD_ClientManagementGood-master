@@ -1,0 +1,59 @@
+﻿@model NBD_ClientManagementGood.Models.Production
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Production</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="ProEstHourly" class="control-label"></label>
+                <input asp-for="ProEstHourly" class="form-control" />
+                <span asp-validation-for="ProEstHourly" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProEstMaterialCost" class="control-label"></label>
+                <input asp-for="ProEstMaterialCost" class="form-control" />
+                <span asp-validation-for="ProEstMaterialCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProEstTotalHours" class="control-label"></label>
+                <input asp-for="ProEstTotalHours" class="form-control" />
+                <span asp-validation-for="ProEstTotalHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProBidPercent" class="control-label"></label>
+                <input asp-for="ProBidPercent" class="form-control" />
+                <span asp-validation-for="ProBidPercent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidID" class="control-label"></label>
+                <select asp-for="BidID" class="form-control" asp-items="ViewBag.BidID"></select>
+                <span asp-validation-for="BidID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LabourDepartmentID" class="control-label"></label>
+                <select asp-for="LabourDepartmentID" class="form-control" asp-items="ViewBag.LabourDepartmentID"></select>
+                <span asp-validation-for="LabourDepartmentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -8,6 +8,7 @@ namespace NBD_ClientManagementGood.Models
 {
     public class ProjectAdminReport
     {
+        public int ID { get; set; }
 
         [Display(Name = "Name")]
         [Required(ErrorMessage = "You cannot leave the name blank.")]

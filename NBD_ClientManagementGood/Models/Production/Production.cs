@@ -8,12 +8,19 @@ namespace NBD_ClientManagementGood.Models
 {
     public class Production
     {
+        public Production()
+        {
+            Labour = new HashSet<Labour>();
+            ProductionItems = new HashSet<ProductionItem>();
+            //ProjectTeams = new HashSet<ProjectTeam>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Estimated hourly rate")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public double ProEstHourly { get; set; }
 
         [Display(Name = "Total Material Cost")]
@@ -37,5 +44,11 @@ namespace NBD_ClientManagementGood.Models
         public int LabourDepartmentID { get; set; }
 
         public virtual LabourDepartment LabourDepartment { get; set; }
+
+        public virtual ICollection<Labour> Labour { get; set; }
+
+        public virtual ICollection<ProductionItem> ProductionItems { get; set; }
+
+        //public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
     }
 }

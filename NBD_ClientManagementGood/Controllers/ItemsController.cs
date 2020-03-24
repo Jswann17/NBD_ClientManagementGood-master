@@ -54,7 +54,7 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Code,Size,Qty,Net,TotalCost,DeliveryDate,InstallDate,InvBidID")] Item item)
+        public async Task<IActionResult> Create([Bind("ID,Type,Code,Size,Qty,Net,TotalCost,DeliveryDate,InstallDate")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Code,Size,Qty,Net,TotalCost,DeliveryDate,InstallDate,InvBidID")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Type,Code,Size,Qty,Net,TotalCost,DeliveryDate,InstallDate")] Item item)
         {
             if (id != item.ID)
             {
