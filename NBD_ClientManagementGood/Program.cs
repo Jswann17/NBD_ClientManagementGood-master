@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NBD_ClientManagementGood.Data;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace NBD_ClientManagementGood
 {
@@ -27,7 +27,7 @@ namespace NBD_ClientManagementGood
                 {
                     var context = services.GetRequiredService<NBD_ClientManagementGoodContext>();
                     context.Database.Migrate();
-                    CMOSeedData.Initialize(services);
+                    //CMOSeedData.Initialize(services);
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     identityContext.Database.Migrate();
                     ApplicationSeedData.SeedAsync(identityContext, services).Wait();

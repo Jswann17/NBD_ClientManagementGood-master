@@ -1,4 +1,5 @@
 Add-Migration -Context NBD_ClientManagementGoodContext
+Add-Migration -Context ApplicationDbContext
 Remove-Migration -Context NBD_ClientManagementGoodContext
+Update-Database -Context ApplicationDbContext *Do first*
 Update-Database -Context NBD_ClientManagementGoodContext
-Update-Database -Context ApplicationDbContext
