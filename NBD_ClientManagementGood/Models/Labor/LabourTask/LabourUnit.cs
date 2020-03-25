@@ -15,28 +15,28 @@ namespace NBD_ClientManagementGood.Models
 
         public int ID { get; set; }
 
-        [Display(Name = "Unit Description")]
+        [Display(Name = "Unit Name")]
         [Required(ErrorMessage = "You cannot leave the unit description blank")]
         [StringLength(250, ErrorMessage = "The description cannot be more than 250 characters long.")]
         public string Description { get; set; }
-
-        [Display(Name = "Total Hours")]
-        //[DataType(DataType.Time)]
-        [Required(ErrorMessage = "You must enter a Time")]
-        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
-        public int Hours { get; set; }
-
-        [Display(Name = "Total Cost")]
-        [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "You must enter a Amount")]
-        [RegularExpression("^\\d{1,7}$", ErrorMessage = "Please enter valid amount.")]
-        public int Cost { get; set; }
 
         [Display(Name = "Estimated Cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "You must enter a Amount")]
         [RegularExpression("^\\d{1,7}$", ErrorMessage = "Please enter valid amount.")]
         public int EstCost { get; set; }
+
+        [Display(Name = "Price per hour")]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "You must enter a amount")]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public double Price { get; set; }
+
+        [Display(Name = "Cost per hour")]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "You must enter a amount")]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public double Cost { get; set; }
 
         [Display(Name = "Task Name")]
         [Required(ErrorMessage = "You cannot leave the task name blank")]

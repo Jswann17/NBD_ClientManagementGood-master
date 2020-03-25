@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200312193059_NBDMigration.cs" />
+    <Compile Remove="Migrations\20200312193059_NBDMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200313004025_init.cs" />
+    <Compile Remove="Migrations\20200313004025_init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Controllers\BidsController.cs~RF165758a6.TMP" />
     <None Remove="NewFile.txt" />
   </ItemGroup>

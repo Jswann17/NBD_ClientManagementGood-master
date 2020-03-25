@@ -10,8 +10,8 @@ using NBD_ClientManagementGood.Data;
 namespace NBD_ClientManagementGood.Migrations
 {
     [DbContext(typeof(NBD_ClientManagementGoodContext))]
-    [Migration("20200312193059_NBDMigration")]
-    partial class NBDMigration
+    [Migration("20200324181357_NBMigration")]
+    partial class NBMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,7 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<DateTime>("EstStart");
 
-                    b.Property<string>("Location")
-                        .IsRequired();
+                    b.Property<string>("Location");
 
                     b.Property<int>("ProjectID");
 
@@ -215,8 +214,7 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<int?>("ProductionWorkReportID");
 
-                    b.Property<int>("Qty")
-                        .HasMaxLength(12);
+                    b.Property<int>("Qty");
 
                     b.Property<string>("Size")
                         .HasMaxLength(100);

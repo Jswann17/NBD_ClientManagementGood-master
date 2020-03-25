@@ -15,17 +15,18 @@ namespace NBD_ClientManagementGood.Models
         [StringLength(100, ErrorMessage = "Last name cannot be more than 100 characters long.")]
         public string Department { get; set; }
 
-        [Display(Name = "Price per hour")]
-        [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "You must enter a amount")]
-        [DisplayFormat(DataFormatString = "{0:C0}")]
-        public double Price { get; set; }
+        [Display(Name = "Total Hours")]
+        //[DataType(DataType.Time)]
+        [Required(ErrorMessage = "You must enter a Time")]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        public int Hours { get; set; }
 
-        [Display(Name = "Cost per hour")]
+        [Display(Name = "Total Cost")]
         [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "You must enter a amount")]
-        [DisplayFormat(DataFormatString = "{0:C0}")]
-        public double Cost { get; set; }
+        [Required(ErrorMessage = "You must enter a Amount")]
+        [RegularExpression("^\\d{1,7}$", ErrorMessage = "Please enter valid amount.")]
+        public int Cost { get; set; }
+
 
         [Display(Name = "Name")]
         [Required(ErrorMessage = "You cannot leave the name blank.")]

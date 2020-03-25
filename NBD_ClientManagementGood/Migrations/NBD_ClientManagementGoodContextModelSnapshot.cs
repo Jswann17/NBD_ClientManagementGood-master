@@ -36,8 +36,7 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<DateTime>("EstStart");
 
-                    b.Property<string>("Location")
-                        .IsRequired();
+                    b.Property<string>("Location");
 
                     b.Property<int>("ProjectID");
 
@@ -213,8 +212,7 @@ namespace NBD_ClientManagementGood.Migrations
 
                     b.Property<int?>("ProductionWorkReportID");
 
-                    b.Property<int>("Qty")
-                        .HasMaxLength(12);
+                    b.Property<int>("Qty");
 
                     b.Property<string>("Size")
                         .HasMaxLength(100);
