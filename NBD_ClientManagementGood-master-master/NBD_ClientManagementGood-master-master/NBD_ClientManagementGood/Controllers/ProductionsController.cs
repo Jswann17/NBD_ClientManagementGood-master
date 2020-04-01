@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NBD_ClientManagementGood.Data;
 using NBD_ClientManagementGood.Models;
-using NBD_ClientManagementGood.ViewModel;
 
 namespace NBD_ClientManagementGood.Controllers
 {
@@ -23,10 +22,8 @@ namespace NBD_ClientManagementGood.Controllers
         // GET: Productions
         public async Task<IActionResult> Index()
         {
-            var productions = from s in _context.Productions
-                .Include(s => s.Labour).ThenInclude(s => s.LabourUnit)
-                         select s;
-            return View(await productions.ToListAsync());
+            var nBD_ClientManagementGoodContext = _context.Productions.Include(p => p.Bid);
+            return View(await nBD_ClientManagementGoodContext.ToListAsync());
         }
 
         // GET: Productions/Details/5
@@ -39,7 +36,6 @@ namespace NBD_ClientManagementGood.Controllers
 
             var production = await _context.Productions
                 .Include(p => p.Bid)
-                .Include(p => p.LabourDepartment)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (production == null)
             {
@@ -52,10 +48,7 @@ namespace NBD_ClientManagementGood.Controllers
         // GET: Productions/Create
         public IActionResult Create()
         {
-            Production production = new Production();
             ViewData["BidID"] = new SelectList(_context.Bids, "ID", "BlueprintCode");
-            ViewData["LabourDepartmentID"] = new SelectList(_context.LabourDepartments, "ID", "Name");
-            PopulateAssignedUnitData(production);
             return View();
         }
 
@@ -64,25 +57,15 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ProEstHourly,ProEstMaterialCost,ProEstTotalHours,ProBidPercent,BidID,LabourDepartmentID")] Production production, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,Name,ProHourly,ProMaterialCost,ProTotalCost,ProBidPercent,BidID")] Production production)
         {
-            try
+            if (ModelState.IsValid)
             {
-                UpdateLabourUnits(selectedOptions, production);
-                if (ModelState.IsValid)
-                {
-                    _context.Add(production);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Something went wrong in the database.");
+                _context.Add(production);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             ViewData["BidID"] = new SelectList(_context.Bids, "ID", "BlueprintCode", production.BidID);
-            ViewData["LabourDepartmentID"] = new SelectList(_context.LabourDepartments, "ID", "Name", production.LabourDepartmentID);
-            PopulateAssignedUnitData(production);
             return View(production);
         }
 
@@ -94,17 +77,12 @@ namespace NBD_ClientManagementGood.Controllers
                 return NotFound();
             }
 
-            var production = await _context.Productions
-                .Include(d => d.Labour).ThenInclude(d => d.LabourUnit)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(d => d.ID == id);
+            var production = await _context.Productions.FindAsync(id);
             if (production == null)
             {
                 return NotFound();
             }
             ViewData["BidID"] = new SelectList(_context.Bids, "ID", "BlueprintCode", production.BidID);
-            ViewData["LabourDepartmentID"] = new SelectList(_context.LabourDepartments, "ID", "Name", production.LabourDepartmentID);
-            PopulateAssignedUnitData(production);
             return View(production);
         }
 
@@ -113,17 +91,12 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProEstHourly,ProEstMaterialCost,ProEstTotalHours,ProBidPercent,BidID,LabourDepartmentID")] Production production, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProHourly,ProMaterialCost,ProTotalCost,ProBidPercent,BidID")] Production production)
         {
-            var productionToUpdate = await _context.Productions
-                .Include(d => d.Labour).ThenInclude(d => d.LabourUnit)
-                .SingleOrDefaultAsync(d => d.ID == id);
             if (id != production.ID)
             {
                 return NotFound();
             }
-
-            UpdateLabourUnits(selectedOptions, production);
 
             if (ModelState.IsValid)
             {
@@ -146,8 +119,6 @@ namespace NBD_ClientManagementGood.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BidID"] = new SelectList(_context.Bids, "ID", "BlueprintCode", production.BidID);
-            ViewData["LabourDepartmentID"] = new SelectList(_context.LabourDepartments, "ID", "DepartmentDescription", production.LabourDepartmentID);
-            PopulateAssignedUnitData(productionToUpdate);
             return View(production);
         }
 
@@ -161,7 +132,6 @@ namespace NBD_ClientManagementGood.Controllers
 
             var production = await _context.Productions
                 .Include(p => p.Bid)
-                .Include(p => p.LabourDepartment)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (production == null)
             {
@@ -180,69 +150,6 @@ namespace NBD_ClientManagementGood.Controllers
             _context.Productions.Remove(production);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private void PopulateAssignedUnitData(Production production)
-        {
-            var allUnits = _context.LabourUnits;
-            var proUnit = new HashSet<int>(production.Labour.Select(b => b.LabourUnitID));
-            var selected = new List<OptionVM>();
-            var available = new List<OptionVM>();
-            foreach (var s in allUnits)
-            {
-                if (proUnit.Contains(s.ID))
-                {
-                    selected.Add(new OptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.Description
-                    });
-                }
-                else
-                {
-                    available.Add(new OptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.Description
-                    });
-                }
-            }
-
-            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        }
-        private void UpdateLabourUnits(string[] selectedOptions, Production unitToUpdate)
-        {
-            if (selectedOptions == null)
-            {
-                unitToUpdate.Labour = new List<Labour>();
-                return;
-            }
-
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
-            var labourStaffs = new HashSet<int>(unitToUpdate.Labour.Select(b => b.LabourUnitID));
-            foreach (var s in _context.Staffs)
-            {
-                if (selectedOptionsHS.Contains(s.ID.ToString()))
-                {
-                    if (!labourStaffs.Contains(s.ID))
-                    {
-                        unitToUpdate.Labour.Add(new Labour
-                        {
-                            LabourUnitID = s.ID,
-                            ProductionID = unitToUpdate.ID
-                        });
-                    }
-                }
-                else
-                {
-                    if (labourStaffs.Contains(s.ID))
-                    {
-                        Labour specToRemove = unitToUpdate.Labour.SingleOrDefault(d => d.LabourUnitID == s.ID);
-                        _context.Remove(specToRemove);
-                    }
-                }
-            }
         }
 
         private bool ProductionExists(int id)

@@ -35,7 +35,7 @@ namespace NBD_ClientManagementGood.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EstEnd { get; set; }
 
-        [Display(Name = "Total Cost")]
+        [Display(Name = "Total Estimated Cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "You must enter a amount")]
         [DisplayFormat(DataFormatString = "{0:C0}")]

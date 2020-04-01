@@ -26,7 +26,7 @@ namespace NBD_ClientManagementGood.Models
         [StringLength(250, ErrorMessage = "The description cannot be more than 250 characters long.")]
         public string Task { get; set; }
 
-        [Display(Name = "Submitter Name")]
+        [Display(Name = "Name")]
         [Required(ErrorMessage = "You cannot leave the name blank.")]
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
         public string Submitter { get; set; }

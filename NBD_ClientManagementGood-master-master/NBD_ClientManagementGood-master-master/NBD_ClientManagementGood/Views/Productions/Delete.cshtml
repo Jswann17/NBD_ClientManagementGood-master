@@ -12,22 +12,28 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProEstHourly)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProEstHourly)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProEstMaterialCost)
+            @Html.DisplayNameFor(model => model.ProHourly)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProEstMaterialCost)
+            @Html.DisplayFor(model => model.ProHourly)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProEstTotalHours)
+            @Html.DisplayNameFor(model => model.ProMaterialCost)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProEstTotalHours)
+            @Html.DisplayFor(model => model.ProMaterialCost)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProTotalCost)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProTotalCost)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProBidPercent)
@@ -40,12 +46,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Bid.BlueprintCode)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LabourDepartment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LabourDepartment.DepartmentDescription)
         </dd class>
     </dl>
     

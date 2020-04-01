@@ -25,6 +25,7 @@ namespace NBD_ClientManagementGood.Controllers
         {
             var staffs = from s in _context.LabourDepartments
                 .Include(s => s.LabourStaffs).ThenInclude(s => s.Staff)
+                .Include(s => s.Production)
                          select s;
             return View(await staffs.ToListAsync());
         }
@@ -38,6 +39,7 @@ namespace NBD_ClientManagementGood.Controllers
             }
 
             var labourDepartment = await _context.LabourDepartments
+                .Include(p => p.Production)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (labourDepartment == null)
             {
@@ -52,6 +54,7 @@ namespace NBD_ClientManagementGood.Controllers
         {
             LabourDepartment labourDepartment = new LabourDepartment();
             PopulateAssignedStaffData(labourDepartment);
+            ViewData["ProductionID"] = new SelectList(_context.Productions, "ID", "Name");
             return View();
         }
 
@@ -60,7 +63,7 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,DepartmentDescription")] LabourDepartment labourDepartment, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,Name,DepartmentDescription,ProductionID")] LabourDepartment labourDepartment, string[] selectedOptions)
         {
             try
             {
@@ -77,6 +80,7 @@ namespace NBD_ClientManagementGood.Controllers
                 ModelState.AddModelError("", "Something went wrong in the database.");
             }
             PopulateAssignedStaffData(labourDepartment);
+            ViewData["ProductionID"] = new SelectList(_context.Productions, "ID", "Name", labourDepartment.ProductionID);
             return View(labourDepartment);
         }
 
@@ -97,6 +101,7 @@ namespace NBD_ClientManagementGood.Controllers
                 return NotFound();
             }
             PopulateAssignedStaffData(labourDepartment);
+            ViewData["ProductionID"] = new SelectList(_context.Productions, "ID", "Name", labourDepartment.ProductionID);
             return View(labourDepartment);
         }
 
@@ -105,7 +110,7 @@ namespace NBD_ClientManagementGood.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,DepartmentDescription")] LabourDepartment labourDepartment, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,DepartmentDescription,ProductionID")] LabourDepartment labourDepartment, string[] selectedOptions)
         {
             var departmentToUpdate = await _context.LabourDepartments
                 .Include(d => d.LabourStaffs).ThenInclude(d => d.Staff)
@@ -114,7 +119,6 @@ namespace NBD_ClientManagementGood.Controllers
             {
                 return NotFound();
             }
-
             UpdateLabourStaffs(selectedOptions, departmentToUpdate);
 
             if (await TryUpdateModelAsync<LabourDepartment>(departmentToUpdate, "",d => d.Name,d => d.DepartmentDescription))
@@ -138,6 +142,7 @@ namespace NBD_ClientManagementGood.Controllers
                 return RedirectToAction(nameof(Index));
             }
             PopulateAssignedStaffData(departmentToUpdate);
+            ViewData["ProductionID"] = new SelectList(_context.Productions, "ID", "Name", labourDepartment.ProductionID);
             return View(departmentToUpdate);
         }
 

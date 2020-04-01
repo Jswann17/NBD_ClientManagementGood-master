@@ -34,7 +34,7 @@ namespace NBD_ClientManagementGood.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime SubmissionDate { get; set; }
 
-        [Display(Name = " Submitter Name")]
+        [Display(Name = "Name")]
         [Required(ErrorMessage = "You cannot leave the name blank.")]
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
         public string Submitter { get; set; }

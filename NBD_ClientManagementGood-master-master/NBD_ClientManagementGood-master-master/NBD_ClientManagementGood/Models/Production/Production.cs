@@ -12,28 +12,33 @@ namespace NBD_ClientManagementGood.Models
         {
             Labour = new HashSet<Labour>();
             ProductionItems = new HashSet<ProductionItem>();
-            //ProjectTeams = new HashSet<ProjectTeam>();
+            LabourDepartments = new HashSet<LabourDepartment>();
         }
 
         public int ID { get; set; }
 
-        [Display(Name = "Estimated hourly rate")]
+        [Display(Name = "Production Name")]
+        [Required(ErrorMessage = "You can not leave this project name field blank")]
+        [StringLength(100, ErrorMessage = "Project name cannot be longer than 100 characters")]
+        public string Name { get; set; }
+
+        [Display(Name = "Total hourly rate")]
         //[DataType(DataType.Time)]
         [Required(ErrorMessage = "You must enter a Time")]
         //[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
-        public double ProEstHourly { get; set; }
+        public double ProHourly { get; set; }
 
-        [Display(Name = "Total Material Cost")]
+        [Display(Name = "Total material cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "You must enter a Amount")]
         [RegularExpression("^\\d{1,7}$", ErrorMessage = "Please enter valid amount.")]
-        public double ProEstMaterialCost { get; set; }
+        public double ProMaterialCost { get; set; }
 
-        [Display(Name = "Total Cost")]
+        [Display(Name = "Total cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "You must enter a Amount")]
         [RegularExpression("^\\d{1,7}$", ErrorMessage = "Please enter valid amount.")]
-        public double ProEstTotalHours { get; set; }
+        public double ProTotalCost { get; set; }
 
         public double ProBidPercent { get; set; }
 
@@ -41,14 +46,10 @@ namespace NBD_ClientManagementGood.Models
 
         public virtual Bid Bid { get; set; }
 
-        public int LabourDepartmentID { get; set; }
-
-        public virtual LabourDepartment LabourDepartment { get; set; }
-
         public virtual ICollection<Labour> Labour { get; set; }
 
         public virtual ICollection<ProductionItem> ProductionItems { get; set; }
 
-        //public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
+        public virtual ICollection<LabourDepartment> LabourDepartments { get; set; }
     }
 }

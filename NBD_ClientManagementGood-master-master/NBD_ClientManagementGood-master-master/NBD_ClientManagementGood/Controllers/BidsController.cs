@@ -25,6 +25,7 @@ namespace NBD_ClientManagementGood.Controllers
         {
             var items = from s in _context.Bids
                 .Include(s => s.InvBids).ThenInclude(s => s.Item)
+                .Include(s => s.Project)
                          select s;
             return View(await items.ToListAsync());
         }

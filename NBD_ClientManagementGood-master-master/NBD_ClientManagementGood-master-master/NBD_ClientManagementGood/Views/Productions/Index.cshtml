@@ -13,25 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LabourDepartment)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProEstHourly)
+                @Html.DisplayNameFor(model => model.ProHourly)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProEstMaterialCost)
+                @Html.DisplayNameFor(model => model.ProMaterialCost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProEstTotalHours)
+                @Html.DisplayNameFor(model => model.ProTotalCost)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProBidPercent)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Bid)
-            </th>
-            <th>
-                Labour
             </th>
             <th></th>
         </tr>
@@ -40,28 +37,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.LabourDepartment.DepartmentDescription)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ProEstHourly)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProEstMaterialCost)
+                @Html.DisplayFor(modelItem => item.ProHourly)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProEstTotalHours)
+                @Html.DisplayFor(modelItem => item.ProMaterialCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProTotalCost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProBidPercent)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Bid.BlueprintCode)
             </td>
             <td>
-                @foreach (var s in item.Labour)
-                {
-                    @s.LabourUnit.Description <br />
-                }
+                @Html.DisplayFor(modelItem => item.Bid.BlueprintCode)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

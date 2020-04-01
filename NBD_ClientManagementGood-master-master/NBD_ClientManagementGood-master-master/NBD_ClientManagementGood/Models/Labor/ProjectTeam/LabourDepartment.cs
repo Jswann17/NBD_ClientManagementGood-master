@@ -12,8 +12,6 @@ namespace NBD_ClientManagementGood.Models
         public LabourDepartment()
         {
             LabourStaffs = new HashSet<LabourStaff>();
-            Productions = new HashSet<Production>();
-            //ProjectTeams = new HashSet<ProjectTeam>();
         }
 
         public int ID { get; set; }
@@ -30,8 +28,9 @@ namespace NBD_ClientManagementGood.Models
 
         public ICollection<LabourStaff> LabourStaffs { get; set; }
 
-        public virtual ICollection<Production> Productions { get; set; }
+        public int ProductionID { get; set; }
 
-        //public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
+        public virtual Production Production { get; set; }
+
     }
 }
