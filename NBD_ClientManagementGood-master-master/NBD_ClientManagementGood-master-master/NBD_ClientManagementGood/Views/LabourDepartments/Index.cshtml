@@ -1,0 +1,56 @@
+﻿@model IEnumerable<NBD_ClientManagementGood.Models.LabourDepartment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center text-success">
+    <h1>Labour Department</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success text-center">Create Labour Department</a>
+    </p>
+</div>
+<table class="table table-hover table-bordered bg-success">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.DepartmentDescription)
+        </th>*@
+            <th>
+                Staff
+            </th>
+            <th>
+                Staff Role
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody class="bg-light">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.DepartmentDescription)
+                    </td>*@
+                <td>
+                    @foreach (var s in item.LabourStaffs)
+                    {
+                        @s.Staff.Name <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-success">Update</a>
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-success">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

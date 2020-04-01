@@ -1,0 +1,59 @@
+﻿@model IEnumerable<NBD_ClientManagementGood.Models.DesignBudget>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="text-center text-success">
+        <h1>Design Budget</h1>
+        <p>
+            <a asp-action="Create" class="btn btn-outline-success text-center">Create New Design Budget</a>
+        </p>
+    </div>
+<table class="table table-hover table-bordered bg-success">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoursTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubmissionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Submitter)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="bg-light">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoursTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Submitter)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-success">Update</a>
+                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-success">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

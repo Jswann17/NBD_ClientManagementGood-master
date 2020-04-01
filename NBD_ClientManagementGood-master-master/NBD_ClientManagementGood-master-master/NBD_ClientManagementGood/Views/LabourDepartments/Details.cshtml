@@ -1,0 +1,29 @@
+﻿@model NBD_ClientManagementGood.Models.LabourDepartment
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="text-success">
+    <div class="text-center">
+        <h1>Labour Department Details</h1>
+    </div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DepartmentDescription)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DepartmentDescription)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-success">Update</a> 
+        <a asp-action="Index" class="btn btn-outline-success">Cancel</a>
+    </div>
