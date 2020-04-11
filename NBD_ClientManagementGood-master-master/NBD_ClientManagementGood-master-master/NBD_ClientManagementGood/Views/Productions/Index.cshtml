@@ -4,18 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<div class="text-center text-success">
+    <h1>Productions</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success text-center">Create New Production</a>
+    </p>
+</div>
+<table class="table table-hover table-bordered bg-success">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.LabourDepartment)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ProEstHourly)
             </th>
             <th>
@@ -26,34 +27,36 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProBidPercent)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Bid)
             </th>
             <th>
                 Labour
             </th>
-            <th></th>
+            <th>
+                Options
+            </th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody class="bg-light">
+        @foreach (var item in Model){
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.LabourDepartment.DepartmentDescription)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.ProEstHourly)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProEstMaterialCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProEstTotalHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProBidPercent)
-            </td>*@
+            @Html.DisplayFor(modelItem => item.ProEstHourly)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProEstMaterialCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProEstTotalHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProBidPercent)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Bid.BlueprintCode)
             </td>
@@ -64,11 +67,9 @@
                 }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-success">Update</a>
+                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-success">Details</a>
             </td>
-        </tr>
-}
+        </tr>}
     </tbody>
 </table>
